@@ -51,9 +51,31 @@ def home():  # Função executada quando '/' é acessado
 @app.route('/view/<artid>')
 def view(artid):
 
+    article = get_one(mysql, artid)
+
+    #print('\n\n\n', article, '\n\n\n')
+
+    #atualiza visualizações do artigo
+    update_views(mysql, article['art_id'])
+
+    #obtém mais artigos do autor
+    article = get_by_author(mysql, article['sta_id'], article['art_id'])
+
+    #traduz o type do author
+    match article['art_type']:
+        case 'admin':
+            article['art_typebr'] = 'Administrador'
+            case 'author':
+            article['art_typebr'] = 'Autor'
+            case 'moderator':
+            article['art_typebr'] = 'Moderador'
+            case _:
+            article['sta_typebr'] = 'colaborador'
+
     toPage = {
         'title': '',
-        'css': 'view.css'
+        'css': 'view.css',
+        'article': article
     }
 
     return render_template('view.html', page=toPage)

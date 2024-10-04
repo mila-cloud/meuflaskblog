@@ -2,10 +2,23 @@
 
 {% block article %}
 
+<h2>{{page.article.art_title}}</h2>
+
+<div class="author-date">
+    por{{page.article.sta_name}} em {{page.article.art_datebr}}
+</div>
+{{page.article.art_content | safe}}
 
 {% endblock%}
 
 {% block aside %}
+
+{#perfil do autor do artigo#}
+
+<div class="aside-author">
+    
+    
+</div>
 
 
 {% endblock %}
